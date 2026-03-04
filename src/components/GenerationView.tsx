@@ -211,17 +211,17 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
         <p className="text-slate-500 dark:text-slate-400 text-lg font-medium">Upload your course materials and let AI create the perfect study plan.</p>
       </header>
 
-      <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 shadow-sm border border-slate-200/60 dark:border-slate-800 space-y-10">
+      <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 shadow-sm border border-slate-200 dark:border-slate-800 space-y-10">
         {/* Subject Input */}
         <div className="space-y-4">
-          <label className="block text-sm font-black uppercase tracking-[0.2em] text-slate-400">Subject Name</label>
+          <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Subject Name</label>
           <div className="relative group">
             <BookOpen className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={22} />
             <input 
               type="text"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-4 focus:ring-primary/10 focus:border-primary h-16 pl-14 pr-6 text-lg font-medium transition-all outline-none shadow-inner"
+              className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 focus:ring-0 focus:border-primary/30 h-16 pl-14 pr-6 text-lg font-medium transition-all outline-none"
               placeholder="e.g. Data Structures or Microeconomics"
             />
           </div>
@@ -230,7 +230,7 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {/* File Upload Area */}
           <div className="space-y-4">
-            <label className="block text-sm font-black uppercase tracking-[0.2em] text-slate-400">Upload Documents</label>
+            <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Upload Documents</label>
             <div 
               onDragOver={onDragOver}
               onDragLeave={onDragLeave}
@@ -240,7 +240,7 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
                 "relative h-[280px] rounded-[2rem] border-2 border-dashed transition-all cursor-pointer flex flex-col items-center justify-center p-8 text-center overflow-hidden",
                 isDragging 
                   ? "border-primary bg-primary/5 scale-[1.02]" 
-                  : "border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-primary hover:bg-primary/5"
+                  : "border-slate-200 dark:border-slate-700 bg-blue-50/30 dark:bg-blue-900/10 hover:border-primary hover:bg-blue-50 dark:hover:bg-blue-900/20"
               )}
             >
               <input 
@@ -251,11 +251,11 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
                 accept=".txt,.md,.doc,.docx,.pdf"
                 onChange={onFileSelect}
               />
-              <div className="size-20 rounded-3xl bg-white dark:bg-slate-900 shadow-sm flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+              <div className="size-20 rounded-3xl bg-white dark:bg-slate-900 shadow-sm flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform border border-slate-100 dark:border-slate-800">
                 <Upload size={36} />
               </div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">Click or drag files</h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Supports PDF, DOCX, TXT, MD</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Support: PDF, DOCX, TXT, MD</p>
               
               {isDragging && (
                 <div className="absolute inset-0 bg-primary/10 backdrop-blur-[2px] rounded-[2rem] flex items-center justify-center">
@@ -263,38 +263,16 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
                 </div>
               )}
             </div>
-
-            {uploadedFiles.length > 0 && (
-              <div className="space-y-3 mt-6">
-                <div className="flex justify-between items-center">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Uploaded Files ({uploadedFiles.length})</p>
-                  <button 
-                    onClick={() => { setUploadedFiles([]); setFileTexts([]); }}
-                    className="text-[10px] font-black text-red-500 hover:underline uppercase tracking-widest"
-                  >
-                    Clear All
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {uploadedFiles.map((f, i) => (
-                    <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 shadow-sm">
-                      <FileIcon size={14} className="text-primary" />
-                      <span className="truncate max-w-[140px]">{f.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Text Input Area */}
           <div className="space-y-4">
-            <label className="block text-sm font-black uppercase tracking-[0.2em] text-slate-400">Manual Text Input</label>
+            <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Manual Text Input</label>
             <div className="relative h-[280px]">
               <textarea 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="w-full h-full rounded-[2rem] border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-4 focus:ring-primary/10 focus:border-primary p-6 text-lg font-medium resize-none outline-none shadow-inner transition-all"
+                className="w-full h-full rounded-[2rem] border-2 border-transparent bg-slate-50 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 focus:border-slate-100 dark:focus:border-slate-800 p-6 text-sm font-medium resize-none outline-none transition-all"
                 placeholder="Paste your syllabus, lecture notes, or textbook excerpts here..."
               />
               {input && (
@@ -307,18 +285,21 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
                 </button>
               )}
             </div>
-            <p className="text-[10px] text-slate-400 italic font-medium">Manual text will be combined with uploaded files for generation.</p>
           </div>
         </div>
 
+        <div className="pt-2">
+          <p className="text-xs text-slate-400 italic text-center">Manual text will be combined with uploaded files for generation.</p>
+        </div>
+
         {/* Options */}
-        <div className="space-y-8 pt-6">
-          <h2 className="text-2xl font-black flex items-center gap-3 text-slate-900 dark:text-white">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Settings2 className="text-primary" size={24} />
+        <div className="space-y-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+              <Settings2 size={20} />
             </div>
-            Generation Options
-          </h2>
+            <h3 className="text-2xl font-extrabold tracking-tight">Generation Options</h3>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <label className={cn(
@@ -329,16 +310,10 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
                 type="checkbox" 
                 checked={options.notes}
                 onChange={() => setOptions({ ...options, notes: !options.notes })}
-                className="hidden"
+                className="w-5 h-5 rounded text-primary focus:ring-primary border-slate-300"
               />
-              <div className={cn(
-                "w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all",
-                options.notes ? "bg-primary border-primary" : "border-slate-300 bg-white dark:bg-slate-900"
-              )}>
-                {options.notes && <Check size={16} className="text-white" />}
-              </div>
               <div className="flex flex-col">
-                <span className="font-black text-lg text-slate-900 dark:text-white">Study Notes</span>
+                <span className="font-bold text-lg text-slate-900 dark:text-white">Study Notes</span>
                 <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">Structured academic summaries</span>
               </div>
             </label>
@@ -351,24 +326,18 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
                 type="checkbox" 
                 checked={options.mcqs}
                 onChange={() => setOptions({ ...options, mcqs: !options.mcqs })}
-                className="hidden"
+                className="w-5 h-5 rounded text-primary focus:ring-primary border-slate-300"
               />
-              <div className={cn(
-                "w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all",
-                options.mcqs ? "bg-primary border-primary" : "border-slate-300 bg-white dark:bg-slate-900"
-              )}>
-                {options.mcqs && <Check size={16} className="text-white" />}
-              </div>
               <div className="flex flex-col">
-                <span className="font-black text-lg text-slate-900 dark:text-white">Practice Quiz</span>
+                <span className="font-bold text-lg text-slate-900 dark:text-white">Practice Quiz</span>
                 <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">Multiple choice questions</span>
               </div>
             </label>
           </div>
 
           <div className="space-y-4">
-            <label className="text-sm font-black text-slate-400 uppercase tracking-[0.2em]">Descriptive Questions (Marks)</label>
-            <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
+            <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-4 block">Descriptive Questions (Marks)</label>
+            <div className="flex flex-wrap gap-2">
               {[1, 2, 3, 4, 5, 6, 8].map((m) => (
                 <button
                   key={m}
@@ -379,7 +348,7 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
                     setOptions({ ...options, marks: newMarks });
                   }}
                   className={cn(
-                    "h-14 rounded-2xl border-2 font-black text-sm transition-all",
+                    "px-5 py-2.5 rounded-xl border-2 font-black text-xs transition-all",
                     options.marks.includes(m)
                       ? "border-primary bg-primary text-white shadow-xl shadow-primary/20 scale-105"
                       : "border-slate-100 dark:border-slate-800 text-slate-500 hover:border-primary/30 bg-slate-50/50 dark:bg-slate-800/50"
@@ -394,20 +363,20 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
 
         {/* Difficulty */}
         <div className="space-y-4">
-          <label className="block text-sm font-black uppercase tracking-[0.2em] text-slate-400">Difficulty Level</label>
-          <div className="flex p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit shadow-inner">
+          <label className="block text-[11px] font-black uppercase tracking-widest text-slate-400 mb-4">Difficulty Level</label>
+          <div className="flex p-1 bg-slate-50 dark:bg-slate-800 rounded-xl w-fit">
             {['Easy', 'Medium', 'Hard'].map((level) => (
               <button
                 key={level}
                 onClick={() => setDifficulty(level)}
                 className={cn(
-                  "px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all",
+                  "px-8 py-2.5 rounded-lg text-xs font-black transition-all",
                   difficulty === level 
-                    ? "bg-white dark:bg-slate-700 text-primary shadow-md scale-105" 
-                    : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
+                    ? "bg-white dark:bg-slate-700 text-primary dark:text-white shadow-sm scale-105" 
+                    : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
                 )}
               >
-                {level}
+                {level.toUpperCase()}
               </button>
             ))}
           </div>
@@ -421,11 +390,11 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
         )}
 
         {/* Action Button */}
-        <div className="pt-10 border-t border-slate-100 dark:border-slate-800">
+        <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
           <button 
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full flex items-center justify-center gap-4 rounded-[2rem] bg-primary dark:bg-primary hover:scale-[1.02] active:scale-95 text-white h-20 text-xl font-black uppercase tracking-[0.2em] transition-all shadow-2xl shadow-primary/20 disabled:opacity-70"
+            className="w-full bg-primary hover:bg-blue-700 text-white font-black py-5 rounded-2xl flex items-center justify-center gap-3 text-lg tracking-wider transition-all shadow-xl shadow-blue-500/20 group uppercase active:scale-[0.99]"
           >
             {isGenerating ? (
               <>
@@ -434,7 +403,7 @@ export default function GenerationView({ onComplete }: GenerationViewProps) {
               </>
             ) : (
               <>
-                <Sparkles size={28} />
+                <Sparkles className="group-hover:rotate-12 transition-transform" size={28} />
                 Generate Prep Pack
               </>
             )}

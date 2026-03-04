@@ -18,11 +18,15 @@ import { ChatMessage } from '../types';
 import { generateExamContent, ExamIQMode } from '../services/geminiService';
 import { cn } from '../lib/utils';
 
-export default function AIChat() {
+interface AIChatProps {
+  userName: string;
+}
+
+export default function AIChat({ userName }: AIChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: "Hello Alex! I'm your ExamIQ AI Tutor. I've analyzed your current study materials. What would you like to dive into today? I can explain complex concepts, generate quick practice questions, or help you review for your upcoming exams.",
+      content: `Hello ${userName.split(' ')[0]}! I'm your ExamIQ AI Tutor. I've analyzed your current study materials. What would you like to dive into today? I can explain complex concepts, generate quick practice questions, or help you review for your upcoming exams.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);

@@ -18,9 +18,10 @@ interface DashboardProps {
   materials: Material[];
   scores: Score[];
   onViewChange: (view: any) => void;
+  userName: string;
 }
 
-export default function Dashboard({ materials, scores, onViewChange }: DashboardProps) {
+export default function Dashboard({ materials, scores, onViewChange, userName }: DashboardProps) {
   const latestScore = scores.length > 0 ? scores[scores.length - 1] : null;
   const avgScore = scores.length > 0 
     ? Math.round(scores.reduce((acc, s) => acc + (s.score / s.total * 100), 0) / scores.length) 
@@ -34,7 +35,7 @@ export default function Dashboard({ materials, scores, onViewChange }: Dashboard
     >
       <header className="flex flex-col gap-1">
         <h2 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white">
-          Welcome back, <span className="text-primary">Alex!</span> 👋
+          Welcome back, <span className="text-primary">{userName.split(' ')[0]}!</span> 👋
         </h2>
         <p className="text-slate-500 dark:text-slate-400 text-lg font-medium">
           You're making great progress on your Semester Finals preparation.
@@ -105,27 +106,31 @@ export default function Dashboard({ materials, scores, onViewChange }: Dashboard
       </div>
 
       {/* AI Insight Banner */}
-      <div className="bg-primary/5 dark:bg-primary rounded-[2rem] p-10 text-slate-900 dark:text-white border border-primary/10 dark:border-none shadow-sm dark:shadow-2xl dark:shadow-primary/20 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden relative">
-        <div className="relative z-10 max-w-2xl">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="p-2 bg-primary/10 dark:bg-white/10 rounded-lg">
-              <Sparkles className="text-primary dark:text-blue-200" size={20} />
-            </div>
-            <span className="uppercase text-xs font-black tracking-[0.2em] text-primary dark:text-blue-200">AI Tutor Insight</span>
+      <div className="bg-primary rounded-3xl p-8 mb-12 relative overflow-hidden group shadow-xl shadow-primary/20 text-white">
+        <div className="absolute -top-12 -right-12 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
+        <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-blue-700/20 rounded-full blur-2xl"></div>
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-4 bg-white/20 w-fit px-3 py-1 rounded-full backdrop-blur-sm">
+            <Sparkles className="text-white" size={16} />
+            <span className="text-white text-[10px] font-extrabold uppercase tracking-widest">AI Tutor Insight</span>
           </div>
-          <h4 className="text-3xl font-bold mb-4 leading-tight">Your Personalized Study Strategy is Ready</h4>
-          <p className="text-slate-600 dark:text-blue-100/80 text-lg font-medium leading-relaxed">
-            Based on your recent performance, focusing on <span className="text-primary dark:text-white underline decoration-2 underline-offset-4 decoration-primary/30 dark:decoration-blue-400 font-bold">Key Concepts</span> in your latest materials could boost your score by <span className="text-primary dark:text-white font-black">15%</span>.
-          </p>
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="max-w-2xl">
+              <h4 className="text-3xl font-extrabold leading-tight">Your Personalized Study Strategy is Ready</h4>
+              <p className="text-blue-50 mt-4 leading-relaxed font-medium">
+                Based on your recent performance, focusing on <span className="underline underline-offset-4 decoration-2 font-bold decoration-blue-200">Key Concepts</span> in your latest materials could boost your score by <span className="font-black text-white bg-white/10 px-1 rounded">15%</span>.
+              </p>
+            </div>
+            <button 
+              onClick={() => onViewChange('chat')}
+              className="bg-white text-primary hover:bg-slate-50 font-black py-4 px-10 rounded-xl transition-all shadow-xl shadow-blue-900/10 uppercase tracking-widest text-sm shrink-0 active:scale-95"
+            >
+              Start Review
+            </button>
+          </div>
         </div>
-        <button 
-          onClick={() => onViewChange('chat')}
-          className="relative z-10 bg-primary dark:bg-white text-white dark:text-primary px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-xl shadow-primary/20 dark:shadow-none active:scale-95 shrink-0"
-        >
-          Start Review
-        </button>
-        <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-primary/5 dark:bg-white/5 rounded-full blur-3xl"></div>
-        <div className="absolute -left-20 -top-20 w-60 h-60 bg-primary/10 dark:bg-primary/20 rounded-full blur-3xl"></div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -157,15 +162,15 @@ export default function Dashboard({ materials, scores, onViewChange }: Dashboard
               </div>
             ))}
             {materials.length === 0 && (
-              <div className="text-center py-16 bg-slate-50/50 dark:bg-slate-800/50 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-700">
-                <div className="size-16 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-slate-300 mx-auto mb-4 shadow-sm">
-                  <BookMarked size={32} />
+              <div className="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl p-12 flex flex-col items-center justify-center text-center bg-white/50 dark:bg-slate-900/50">
+                <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-4 border border-slate-100 dark:border-slate-700 shadow-sm">
+                  <BookMarked className="text-slate-300 dark:text-slate-600" size={32} />
                 </div>
-                <p className="text-slate-500 font-bold">Your library is empty</p>
-                <p className="text-slate-400 text-sm mt-1">Start by generating your first study material.</p>
+                <p className="text-slate-900 dark:text-white font-bold text-lg">Your library is empty</p>
+                <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 mb-6 font-medium">Start by generating your first study material.</p>
                 <button 
                   onClick={() => onViewChange('create')}
-                  className="mt-6 text-primary font-bold text-sm hover:underline"
+                  className="text-primary font-extrabold hover:text-blue-700 transition-colors uppercase tracking-widest text-xs"
                 >
                   Create Material
                 </button>

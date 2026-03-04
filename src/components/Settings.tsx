@@ -10,18 +10,18 @@ import {
   Languages,
   Database,
   Save,
-  ChevronRight,
-  Monitor
+  ChevronRight
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { toast } from 'sonner';
 
 interface SettingsProps {
-  theme: 'light' | 'dark' | 'system';
-  onThemeChange: (theme: 'light' | 'dark' | 'system') => void;
+  theme: 'light' | 'dark';
+  onThemeChange: (theme: 'light' | 'dark') => void;
+  userName: string;
 }
 
-export default function Settings({ theme, onThemeChange }: SettingsProps) {
+export default function Settings({ theme, onThemeChange, userName }: SettingsProps) {
   const [activeTab, setActiveTab] = useState('profile');
   const [pendingTheme, setPendingTheme] = useState(theme);
 
@@ -76,20 +76,15 @@ export default function Settings({ theme, onThemeChange }: SettingsProps) {
               >
                 <div className="flex items-center gap-6 mb-8">
                   <div className="relative group">
-                    <div className="size-24 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden border-4 border-white dark:border-slate-900 shadow-md">
-                      <img 
-                        src="https://picsum.photos/seed/student/200" 
-                        alt="Profile" 
-                        className="w-full h-full object-cover"
-                        referrerPolicy="no-referrer"
-                      />
+                    <div className="size-24 rounded-full bg-primary/10 flex items-center justify-center text-primary text-3xl font-bold border-4 border-white dark:border-slate-900 shadow-md">
+                      {userName.charAt(0).toUpperCase()}
                     </div>
                     <button className="absolute bottom-0 right-0 p-2 bg-primary text-white rounded-full shadow-lg hover:scale-110 transition-transform">
                       <Plus size={14} />
                     </button>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">Alex Rivera</h3>
+                    <h3 className="text-xl font-bold">{userName}</h3>
                     <p className="text-sm text-slate-500">University Student • Premium Member</p>
                   </div>
                 </div>
@@ -99,7 +94,7 @@ export default function Settings({ theme, onThemeChange }: SettingsProps) {
                     <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Full Name</label>
                     <input 
                       type="text" 
-                      defaultValue="Alex Rivera"
+                      defaultValue={userName}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary/50 outline-none"
                     />
                   </div>
@@ -139,7 +134,7 @@ export default function Settings({ theme, onThemeChange }: SettingsProps) {
               >
                 <div className="space-y-4">
                   <h3 className="text-lg font-bold">Theme Preference</h3>
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <button 
                       onClick={() => setPendingTheme('light')}
                       className={cn(
@@ -159,16 +154,6 @@ export default function Settings({ theme, onThemeChange }: SettingsProps) {
                     >
                       <Moon className={pendingTheme === 'dark' ? "text-primary" : "text-slate-400"} size={32} />
                       <span className="font-bold">Dark</span>
-                    </button>
-                    <button 
-                      onClick={() => setPendingTheme('system')}
-                      className={cn(
-                        "flex flex-col items-center gap-3 p-6 rounded-2xl border-2 transition-all",
-                        pendingTheme === 'system' ? "border-primary bg-primary/5" : "border-slate-100 dark:border-slate-800 hover:border-slate-200"
-                      )}
-                    >
-                      <Monitor className={pendingTheme === 'system' ? "text-primary" : "text-slate-400"} size={32} />
-                      <span className="font-bold">System</span>
                     </button>
                   </div>
                 </div>

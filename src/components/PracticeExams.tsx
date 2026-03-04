@@ -302,9 +302,12 @@ export default function PracticeExams({ materials, onScoreSubmit }: PracticeExam
         ))}
 
         {mcqMaterials.length === 0 && (
-          <div className="col-span-full py-20 text-center bg-slate-50 dark:bg-slate-800/50 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700">
-            <GraduationCap className="mx-auto text-slate-300 mb-4" size={48} />
-            <p className="text-slate-500 font-medium">No practice exams available. Generate some from your notes!</p>
+          <div className="col-span-full py-20 text-center bg-slate-50/50 dark:bg-slate-900/20 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-800">
+            <div className="w-20 h-20 bg-white dark:bg-slate-800 rounded-2xl shadow-sm flex items-center justify-center mb-6 mx-auto border border-slate-100 dark:border-slate-700">
+              <GraduationCap className="text-slate-300 dark:text-slate-600" size={48} />
+            </div>
+            <p className="text-slate-900 dark:text-white font-bold text-lg">No practice exams available</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 font-medium">Generate some from your notes to start testing your knowledge!</p>
           </div>
         )}
       </div>
